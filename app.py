@@ -19,7 +19,6 @@ def submit_data():
     profit_loss_entry.delete(0, tk.END)
     messagebox.showinfo("Done!", "Your data has been successfully submitted.")
 
-
 def fetch_table_data():
     conn = sqlite3.connect("trades.db")
     cursor = conn.cursor()
@@ -31,10 +30,7 @@ def fetch_table_data():
 
     return data
 
-
-
 root = tk.Tk()
-
 
 window_width = 450
 window_height = 300
@@ -44,52 +40,48 @@ root.geometry(f"{window_width}x{window_height}")
 root.title("Trading tracker")
 
 notebook = ttk.Notebook(root)
-frame_input = tk.Frame(notebook)
-notebook.add(frame_input, text="Input")
+main_frame = tk.Frame(notebook)
+notebook.add(main_frame, text="Tracker")
 
-
-profit_loss = tk.Label(frame_input, text="Profit/Loss")
+profit_loss = tk.Label(main_frame, text="Profit/Loss")
 profit_loss.pack()
 
-profit_loss_entry = tk.Entry(frame_input)
+profit_loss_entry = tk.Entry(main_frame)
 profit_loss_entry.pack()
 
-submit_btn = tk.Button(frame_input, text="Submit", command=submit_data)
+submit_btn = tk.Button(main_frame, text="Submit", command=submit_data)
 submit_btn.pack()
 
-frame_data = tk.Frame(notebook)
-notebook.add(frame_data, text="Data")
+def show_data():
+    frame_data = tk.Frame(notebook)
+    notebook.add(frame_data, text="Data")
 
-tree = ttk.Treeview(frame_data)
+    tree = ttk.Treeview(frame_data)
 
-columns = ["date", "profit_loss"]
-tree["columns"] = columns
+    columns = ["date", "profit_loss"]
+    tree["columns"] = columns
 
-tree.column("date", width=100)
-tree.heading("date", text="Date")
+    tree.column("date", width=100)
+    tree.heading("date", text="Date")
 
-tree.column("profit_loss", anchor=tk.W, width=100)
-tree.heading("profit_loss", text="Profit/Loss")
+    tree.column("profit_loss", anchor=tk.W, width=100)
+    tree.heading("profit_loss", text="Profit/Loss")
 
-def fill_treeview(data):
-    for row in data:
-        tree.insert("", tk.END, values=row)
+    def fill_treeview(data):
+        for row in data:
+            tree.insert("", tk.END, values=row)
 
-data = fetch_table_data()
-fill_treeview(data)
+    data = fetch_table_data()
+    fill_treeview(data)
 
-tree.pack(expand=True, fill="both")
+    tree.pack(expand=True, fill="both")
 
+show_graph = tk.Button(main_frame, text="Show graph", command=visualising_data)
+show_graph.pack()
 
-
-
-frame_graph = tk.Frame(notebook)
-notebook.add(frame_graph, text="Graph")
-
-plot = tk.Button(frame_graph, text="Show graph", command=visualising_data)
-plot.pack()
+show_data_button = ttk.Button(main_frame, text="Data", command=show_data)
+show_data_button.pack()
 
 notebook.pack(expand=True, fill="both")
-
 
 root.mainloop()

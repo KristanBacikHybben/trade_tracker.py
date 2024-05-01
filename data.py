@@ -3,9 +3,6 @@ import app
 import tkinter as tk
 from tkinter import ttk
 
-
-
-
 conn = sqlite3.connect("trades.db")
 
 cursor = conn.cursor()

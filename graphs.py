@@ -20,4 +20,3 @@ def visualising_data():
     plt.show()
 
     conn.close()
-
