@@ -32,8 +32,8 @@ def fetch_table_data():
 
 root = tk.Tk()
 
-window_width = 450
-window_height = 300
+window_width = 1080
+window_height = 720
 
 root.geometry(f"{window_width}x{window_height}")
 
